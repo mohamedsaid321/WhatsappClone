@@ -1,0 +1,39 @@
+type User @model @auth(rules: [{ allow: private }]) {
+  id: ID!
+  name: String!
+  imageUri: String
+  status: String
+  chatRoomUsers: [ChatRoomUser] @hasMany(indexName: "byUser", fields: ["id"])
+}
+
+type ChatRoomUser @model @auth(rules: [{ allow: private }]) {
+  id: ID!
+  userID: ID! @index(name: "byUser", sortKeyFields: ["chatRoomID"])
+  chatRoomID: ID! @index(name: "byChatRoom", sortKeyFields: ["userID"])
+  user: User @hasOne(fields: ["userID"])
+  chatRoom: ChatRoom @hasOne(fields: ["chatRoomID"])
+}
+
+type ChatRoom @model @auth(rules: [{ allow: private }]) {
+  id: ID!
+  chatRoomUsers: [ChatRoomUser]
+    @hasMany(indexName: "byChatRoom", fields: ["id"])
+  message: [Message] @hasMany(indexName: "byChatRoom", fields: ["id"])
+  lastMessageID: ID
+  lastMessage: Message @hasOne(fields: ["lastMessageID"])
+}
+
+type Message @model @auth(rules: [{ allow: private }]) {
+  id: ID!
+  content: String!
+  userID: ID!
+  chatRoomID: ID!
+    @index(
+      name: "byChatRoom"
+      sortKeyFields: ["createdAt"]
+      queryField: "messagesByChatRoom"
+    )
+  user: User @hasOne(fields: ["userID"])
+  chatRoom: ChatRoom @hasOne(fields: ["chatRoomID"])
+  createdAt: String!
+}
