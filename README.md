@@ -1,7 +1,10 @@
-This is a mobile application project of a whatsapp clone. The tech stack of this project os React Native, Expo, AWS dynamoDB, Graphql.
+<h1>WhatsApp Clone</h1>
+<p>This is a mobile application project of a whatsapp clone. The tech stack of this project os React Native, Expo, AWS dynamoDB, Graphql.</p>
 
-How to run the project.
+<h2>How to run the project</h2>
 
-step 0: Make sure you have node and yarn installed.
-step 1: yarn install
-step 2: yarn start
+<ul>
+<li>step 0: Make sure you have node and yarn installed.</li>
+<li>step 1: yarn install</li>
+<li>step 2: yarn start </li>
+<ul>
